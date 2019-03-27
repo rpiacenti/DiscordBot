@@ -40,5 +40,7 @@ namespace DiscordBot.Modules
             await Context.Channel.SendMessageAsync("", false, embed);
 
         }
+
+
     }
 }
