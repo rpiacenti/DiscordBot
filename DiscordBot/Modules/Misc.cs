@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using DiscordBot.Core.UserAccounts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,24 @@ namespace DiscordBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("myStats")]
+        public async Task MyStats()
+        {
+            var account = UserAccounts.getAccount(Context.User);
+            await Context.Channel.SendMessageAsync($"You have {account.XP} XP and {account.Points} points");
+
+        }
+
+        [Command("addXP")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task addXP(uint xp)
+        {
+            var account = UserAccounts.getAccount(Context.User);
+            account.XP += xp;
+            UserAccounts.SaveAccounts();
+            await Context.Channel.SendMessageAsync($"You gained {xp} XP and now you have a total of {account.XP} XP.");
+        }
+
         [Command("echo")]
         public async Task Echo([Remainder]string message)
         {
@@ -20,7 +39,7 @@ namespace DiscordBot.Modules
             embed.WithColor(new Color(0, 255, 0));
 
             await Context.Channel.SendMessageAsync("", false, embed);
-
+           
         }
 
         [Command("pick")]
