@@ -29,17 +29,17 @@ namespace DiscordBot.Modules
             string[] options = message.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
             Random r = new Random();
-            string Selection = options[r.Next(0,options.Length)];
+            string selection = options[r.Next(0,options.Length)];
 
             var embed = new EmbedBuilder();
             embed.WithTitle("Choice for by " + Context.User.Username);
-            embed.WithDescription(Selection);
+            embed.WithDescription(selection);
             embed.WithColor(new Color(0, 255, 0));
             embed.WithThumbnailUrl("https://www.flyingmag.com/sites/flyingmag.com/files/styles/655_1x_/public/import/embedded/sites/all/files/_images/201308/FLY0813_Disney_01.jpg?itok=oQeBXbIx");
             //Context.User.GetAvatarUrl
 
             await Context.Channel.SendMessageAsync("", false, embed);
-
+            DataStorage.AddPairToStorage(Context.User.Username + DateTime.Now.ToLongDateString(), selection);
         }
 
         [Command("secret")]
@@ -69,6 +69,15 @@ namespace DiscordBot.Modules
             var targetRole = user.Guild.GetRole(roleId);
             Console.WriteLine($"Role ID: {roleId} and Target role: {targetRole} and {user.Roles.Contains(targetRole)}");
             return user.Roles.Contains(targetRole);
-        } 
+        }
+
+        [Command("data")]
+        public async Task GetData([Remainder]string arg = "")
+        {
+
+            await Context.Channel.SendMessageAsync("Data Has " + DataStorage.GetPairsCount() + " pairs.");
+            DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "TheCount" + DataStorage.GetPairsCount());
+
+        }
     }
 }

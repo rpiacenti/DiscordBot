@@ -30,4 +30,3 @@ C:\Users\Admin\Documents\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.De
 C:\Users\Admin\Documents\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
 C:\Users\Admin\Documents\DiscordBot\DiscordBot\bin\Debug\System.Collections.Immutable.xml
 C:\Users\Admin\Documents\DiscordBot\DiscordBot\bin\Debug\System.Interactive.Async.xml
-C:\Users\Admin\Documents\DiscordBot\DiscordBot\obj\Debug\DiscordBot.csprojAssemblyReference.cache
