@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,33 @@ namespace DiscordBot.Modules
 
         }
 
+        [Command("secret")]
+        public async Task RevealSecret([Remainder]string arg = "")
+        {
+            if (!UserIsSecretOwner((SocketGuildUser)Context.User))
+            {
+                await Context.Channel.SendMessageAsync(":x: You need the SecretOwner2 role to do that. " + Context.User.Mention);
+                return;
+            }
+            var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
+            await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET")); 
+        }
 
+        private bool UserIsSecretOwner(SocketGuildUser user)
+        {
+
+            string targetRoleName = "SecretOwner2";
+            var result = from r in user.Guild.Roles
+                         where r.Name == targetRoleName
+                         select r.Id;
+            ulong roleId = result.FirstOrDefault();
+            if (roleId == 0)
+            {
+                return false;
+            }
+            var targetRole = user.Guild.GetRole(roleId);
+            Console.WriteLine($"Role ID: {roleId} and Target role: {targetRole} and {user.Roles.Contains(targetRole)}");
+            return user.Roles.Contains(targetRole);
+        } 
     }
 }

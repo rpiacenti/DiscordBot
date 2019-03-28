@@ -18,12 +18,12 @@ namespace DiscordBot
 
         public async Task StartAsync()
         {
-            string name = "Peter";
-            string botName = "Maercy-BOT2";
-            string message = Utilities.GetFormattedAlert("WELCOME_&NAME_&BOTNAME", name, botName);
-            Console.WriteLine(message);
-            Console.ReadLine();
-            return;
+            //string name = "Peter";
+            //string botName = "Maercy-BOT2";
+            //string message = Utilities.GetFormattedAlert("WELCOME_&NAME_&BOTNAME", name, botName);
+            //Console.WriteLine(message);
+            //Console.ReadLine();
+            //return;
 
             if (Config.bot.token == "" || Config.bot.token == null) return;
             _client = new DiscordSocketClient(new DiscordSocketConfig
