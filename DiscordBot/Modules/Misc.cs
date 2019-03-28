@@ -7,11 +7,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NReco.ImageGenerator;
+using System.IO;
 
 namespace DiscordBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("hello")]
+        public async Task Hello(string color = "red")
+        {
+            string css = "<style>\nh1\n{\ncolor: " + color + ";\n}\n</style>";
+            string html = $"<h1>Hello {Context.User.Username }!</h1>";
+            var converter = new NReco.ImageGenerator.HtmlToImageConverter
+            {
+                Width = 250,
+                Height = 90
+            };
+            var jpgBytes = converter.GenerateImage(css + html, NReco.ImageGenerator.ImageFormat.Jpeg);
+            await Context.Channel.SendFileAsync(new MemoryStream(jpgBytes), "hello.jpg");
+
+        }
+
         [Command("myStats")]
         public async Task MyStats([Remainder] string arg = "")
         {
