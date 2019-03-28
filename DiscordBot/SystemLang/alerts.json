@@ -1,4 +1,5 @@
 {
   "TEST": "Hello World!",
-  "WELCOME_&NAME_&BOTNAME":  "Helo, {0}. My names is {1}! How may I help you?"
+  "WELCOME_&NAME_&BOTNAME": "Helo, {0}. My names is {1}! How may I help you?",
+  "SECRET":  "This is the secret `123ABC`"
 }
