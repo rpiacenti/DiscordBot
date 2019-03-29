@@ -17,6 +17,13 @@ namespace DiscordBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("WhatLevelIs")]
+        public async Task WhatLevelIs(uint xp)
+        {
+            uint level = (uint)Math.Sqrt(xp / 50); 
+            await Context.Channel.SendMessageAsync("The level is " + level);
+        }
+
         [Command("react")]
         public async Task HandleReactionMessage()
         {
