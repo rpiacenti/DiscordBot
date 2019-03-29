@@ -9,11 +9,38 @@ using System.Text;
 using System.Threading.Tasks;
 using NReco.ImageGenerator;
 using System.IO;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace DiscordBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("person")]
+        public async Task GetRandomPerson()
+        {
+            string json = "";
+            using (WebClient client = new WebClient())
+            {
+                json = client.DownloadString("https://randomuser.me/api/?gender=female&nat=BR");
+            }
+
+            var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
+            string gender = dataObject.results[0].gender.ToString();
+            string firstName = dataObject.results[0].name.first.ToString();
+            string lastName = dataObject.results[0].name.last.ToString();
+            string avatarURL = dataObject.results[0].picture.large.ToString();
+
+            var embed = new EmbedBuilder();
+            embed.WithThumbnailUrl(avatarURL);
+            embed.WithTitle("Genereted Person");
+            embed.AddInlineField("Firt Name:", char.ToUpper(firstName[0]) + firstName.Substring(1));
+            embed.AddInlineField("Last Name:", char.ToUpper(lastName[0]) + lastName.Substring(1));
+
+            await Context.Channel.SendMessageAsync("", embed: embed);
+
+        }
+
         [Command("hello")]
         public async Task Hello(string color = "red")
         {
