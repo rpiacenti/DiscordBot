@@ -11,11 +11,23 @@ using NReco.ImageGenerator;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using Discord.Rest;
 
 namespace DiscordBot.Modules
 {
     public class Misc : ModuleBase<SocketCommandContext>
     {
+        [Command("react")]
+        public async Task HandleReactionMessage()
+        {
+            RestUserMessage msg = await Context.Channel.SendMessageAsync("React to me!");
+            //msg.Id
+            Global.MessageIdToTrack = msg.Id;
+
+
+        }
+
+
         [Command("person")]
         public async Task GetRandomPerson()
         {

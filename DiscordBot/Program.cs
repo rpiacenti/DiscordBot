@@ -26,6 +26,7 @@ namespace DiscordBot
             });
             _client.Log += Log;
             _client.Ready += RepeatingTimer.StartTime;
+            _client.ReactionAdded += OnReactionAdded;
             _handler = new CommandHandler();
             await _client.LoginAsync(TokenType.Bot, Config.bot.token);
             await _client.StartAsync();
@@ -33,6 +34,17 @@ namespace DiscordBot
             _handler = new CommandHandler();
             await _handler.InitializeAsync(_client);
             await Task.Delay(-1);
+        }
+
+        private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel channel, SocketReaction reaction )
+        {
+            if(reaction .MessageId == Global.MessageIdToTrack)
+            {
+                if(reaction .Emote.Name == "👌")
+                {
+                    await channel.SendMessageAsync(reaction.User.Value.Username + " says ok.");
+                }
+            }
         }
 
         private async Task Log(LogMessage msg)
