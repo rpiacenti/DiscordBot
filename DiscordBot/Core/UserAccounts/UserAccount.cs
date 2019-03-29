@@ -13,5 +13,13 @@ namespace DiscordBot.Core.UserAccounts
         public uint Points { get; set; }
 
         public uint XP { get; set; }
+
+        public uint LevelNumber
+        {
+            get
+            {
+                return (uint)Math.Sqrt(XP / 50);
+            }
+        }
     }
 }
