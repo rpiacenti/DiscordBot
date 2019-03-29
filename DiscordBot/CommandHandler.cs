@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using DiscordBot.Core.LevelingSystem;
+using DiscordBot.Core.UserAccounts;
 
 namespace DiscordBot
 {
@@ -32,11 +33,17 @@ namespace DiscordBot
             var context = new SocketCommandContext(_client, msg);
             if (context.User.IsBot) return;
 
+            //Mute check
+            var userAccount = UserAccounts.getAccount(context.User );
+            if(userAccount .isMuted)
+            {
+                await context.Message.DeleteAsync();
+                return;
+            }   
+            
             //Leveling Up
             Leveling.UserSentMessage((SocketGuildUser)context.User, (SocketTextChannel) context.Channel);
             
-
-
             int argPos = 0;
             if(msg.HasStringPrefix(Config.bot.cmdPrefix, ref argPos)
                 || msg.HasMentionPrefix(_client.CurrentUser, ref argPos))

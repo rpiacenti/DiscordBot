@@ -2,13 +2,17 @@
   {
     "ID": 560138446035746827,
     "Points": 99,
-    "XP": 5000,
-    "LevelNumber": 10
+    "XP": 5150,
+    "LevelNumber": 10,
+    "isMuted": false,
+    "NumberOfWarnings": 0
   },
   {
     "ID": 560509902309818388,
     "Points": 0,
     "XP": 0,
-    "LevelNumber": 0
+    "LevelNumber": 0,
+    "isMuted": false,
+    "NumberOfWarnings": 0
   }
 ]
