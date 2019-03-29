@@ -21,5 +21,9 @@ namespace DiscordBot.Core.UserAccounts
                 return (uint)Math.Sqrt(XP / 50);
             }
         }
+
+        public bool isMuted { get; set; }
+
+        public uint NumberOfWarnings { get; set; }
     }
 }
