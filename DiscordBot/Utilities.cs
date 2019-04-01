@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using System.Drawing;
 
 namespace DiscordBot
 {
@@ -40,6 +41,12 @@ namespace DiscordBot
         {
             return GetFormattedAlert(key, new object[] { parameter });
 
+        }
+
+        public static string GetMatchingImage(string image)
+        {
+            return Properties.Resources.ResourceManager.GetString(image);
+            
         }
 
     }

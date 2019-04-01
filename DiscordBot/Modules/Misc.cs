@@ -12,6 +12,7 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 using Discord.Rest;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace DiscordBot.Modules
 {
@@ -73,7 +74,6 @@ namespace DiscordBot.Modules
 
 
         }
-
 
         [Command("person")]
         public async Task GetRandomPerson()
@@ -177,7 +177,10 @@ namespace DiscordBot.Modules
                 return;
             }
             var dmChannel = await Context.User.GetOrCreateDMChannelAsync();
-            await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET")); 
+            await dmChannel.SendMessageAsync(Utilities.GetAlert("SECRET"));
+            await dmChannel.SendMessageAsync("https://discord.gg/J4SJCFe");
+
+
         }
 
         private bool UserIsSecretOwner(SocketGuildUser user)
@@ -203,6 +206,24 @@ namespace DiscordBot.Modules
 
             await Context.Channel.SendMessageAsync("Data Has " + DataStorage.GetPairsCount() + " pairs.");
             DataStorage.AddPairToStorage("Count" + DataStorage.GetPairsCount(), "TheCount" + DataStorage.GetPairsCount());
+
+        }
+
+        [Command("dice")]
+        public async Task PlayDice()
+        {
+  
+            Random r = new Random();
+            string selection = r.Next(1, 6) + "W.png";
+
+            string startupPath = AppDomain.CurrentDomain.BaseDirectory;
+            string targetPath = startupPath + "Resources\\";
+            string fileName = startupPath + selection;
+            string ImageUrl = $"attachment://{fileName}";
+
+            FileStream SourceStream = File.Open(fileName, FileMode.Open);
+
+            await Context.Channel.SendFileAsync(SourceStream, selection, "Rolled Dice by " + Context.User.Username,false);
 
         }
     }
